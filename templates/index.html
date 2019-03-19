@@ -144,6 +144,8 @@
                 <div class="modal-body">
                         <form method="POST" action="/">
                             {% csrf_token %}
+                                <input type="text" class="form-control" name="seller" placeholder="Seller Name"><br>
+                                <input type="text" class="form-control" name="buyer" placeholder="Buyer Name"><br>
                                 <input type="text" class="form-control" name="mobile-buyer" placeholder="Mobile Number of Buyer"><br>
                                 <input type="text" class="form-control" name="mobile-seller" placeholder="Mobile Number of Seller"><br>
                                 <input type="text" class="form-control" name="payer-va" placeholder="Buyer Virtual Address"><br>
