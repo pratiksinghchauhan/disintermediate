@@ -7,14 +7,14 @@ from django.db import models
 
 
 class listedTransfers(models.Model):
-    seller = models.CharField(max_length=200)
     buyer = models.CharField(max_length=200)
-    domain =  models.CharField(max_length=200)
-    status = models.BooleanField(default=False)
+    seller = models.CharField(max_length=200)
+    payeeva = models.CharField(max_length=200)
+    payerva = models.CharField(max_length=200)
+    payeemobile =  models.CharField(max_length=200)
+    payermobile = models.CharField(max_length=200)
+    selleraccount = models.CharField(max_length=200)
+    amount = models.CharField(max_length=200)
     ts = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.domain 
-
-class domainHistory(models.Model):
-    domain = models.ForeignKey(listedTransfers)
-    currentOwner = models.CharField(max_length=200)
+        return self.buyer 

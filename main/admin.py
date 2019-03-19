@@ -2,14 +2,12 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import listedTransfers,domainHistory
+from .models import listedTransfers
 
 # Register your models here.
 
 
 class listedTransfersAdmin(admin.ModelAdmin):
-	list_display=["seller","buyer","domain","status","ts"]
+	list_display=["seller","buyer","payeeva","payerva","payeemobile","payermobile","selleraccount","amount","ts"]
 
-class domainHistoryAdmin(admin.ModelAdmin):
-	list_display=["domain","currentOwner"]
 
