@@ -11,6 +11,7 @@ class listedTransfers(models.Model):
     seller = models.CharField(max_length=200)
     payeeva = models.CharField(max_length=200)
     payerva = models.CharField(max_length=200)
+    domain = models.CharField(max_length=200)
     payeemobile =  models.CharField(max_length=200)
     payermobile = models.CharField(max_length=200)
     selleraccount = models.CharField(max_length=200)
