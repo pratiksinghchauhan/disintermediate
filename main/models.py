@@ -16,6 +16,7 @@ class listedTransfers(models.Model):
     payermobile = models.CharField(max_length=200)
     selleraccount = models.CharField(max_length=200)
     amount = models.CharField(max_length=200)
+    state = models.BooleanField(default=False)
     ts = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.buyer 

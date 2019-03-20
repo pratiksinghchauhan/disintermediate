@@ -39,7 +39,7 @@ def transferDomain(request):
         mobileSeller = request.POST['mobile-seller']
         accountno = request.POST['payee-ac']
         amount = request.POST['amount']
-        obj = listedTransfers(buyerName,sellerName,payeeVa,payerVa,domain,mobileBuyer,mobileSeller,accountno,amount)
+        obj = listedTransfers(buyer = buyerName,seller = sellerName,payeeva = payeeVa,payerva = payerVa,domain = domain,payeemobile = mobileBuyer,payermobile = mobileSeller,selleraccount = accountno,amount = amount)
         obj.save()
         return render(request,"index.html",{"msg":"Your mandate is created, Leave rest on us, payment will automatically be done when the domain is transfered"})
     return render(request,"index.html",{"msg":""})

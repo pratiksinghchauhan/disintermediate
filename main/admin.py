@@ -8,6 +8,7 @@ from .models import listedTransfers
 
 
 class listedTransfersAdmin(admin.ModelAdmin):
-	list_display=["seller","buyer","payeeva","payerva","payeemobile","payermobile","selleraccount","domain","amount","ts"]
+	list_display=["seller","buyer","payeeva","payerva","payeemobile","payermobile","selleraccount","domain","amount","state","ts"]
 
 
+admin.site.register(listedTransfers,listedTransfersAdmin)
