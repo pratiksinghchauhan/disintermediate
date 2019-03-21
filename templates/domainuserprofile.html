@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+
+{%  load timesince %}
+
+{% block style %}
+    position:relative;
+{% endblock %}
+
+
+{% block nav %}
+
+              <li><a href="/userhome/">{{request.user.username}}</a></li>
+              <li><a href="/accountsettings/"> <span class="glyphicon glyphicon-cog"></span></a></li>
+              <li><a href="/logout/">Logout <span class="glyphicon glyphicon-log-out"></span></a></li>
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .glyphicon { margin-right:5px; }
+.thumbnail
+{
+    margin-bottom: 20px;
+    padding: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.item.list-group-item
+{
+    float: none;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+{
+    background: #428bca;
+}
+
+.item.list-group-item .list-group-image
+{
+    margin-right: 10px;
+}
+.item.list-group-item .thumbnail
+{
+    margin-bottom: 0px;
+}
+.item.list-group-item .caption
+{
+    padding: 9px 9px 0px 9px;
+}
+.item.list-group-item:nth-of-type(odd)
+{
+    background: #eeeeee;
+}
+
+.item.list-group-item:before, .item.list-group-item:after
+{
+    display: table;
+    content: " ";
+}
+
+.item.list-group-item img
+{
+    float: left;
+}
+.item.list-group-item:after
+{
+    clear: both;
+}
+.list-group-item-text
+{
+    margin: 0 0 11px;
+}
+
+</style>
+
+<div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h3 style="text-align:center;" class="modal-title">Domain Purchase Form</h3><br>
+              <p style="color:rgb(7, 112, 7)">PS: Domain will be tranfered within 24 hours ,We will keep checking and payment will be deducted from your account within 2 hours of the domain transfer. Cheers! </p>
+            </div>
+            <div class="modal-body">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                            <!-- <input type="text" class="form-control" name="seller" placeholder="Seller Name"><br> -->
+                            <input type="text" class="form-control" name="buyer" placeholder="Name"><br>
+                            <!-- <input type="text" class="form-control" name="domain" placeholder="Domain Name"><br> -->
+                            <input type="text" class="form-control" name="mobile-buyer" placeholder="Mobile Number"><br>
+                            <!-- <input type="text" class="form-control" name="mobile-seller" placeholder="Mobile Number of Seller"><br> -->
+                            <input type="text" class="form-control" name="payer-va" placeholder="Virtual Address(UPI)"><br>
+                            <!-- <input type="text" class="form-control" name="payee-va" placeholder="Seller Virtual Address"><br> -->
+                            <input type="text" class="form-control" name="payee-ac" placeholder="Account Number"><br>
+                            <!-- <input type="text" class="form-control" name="amount" placeholder="Amount"><br> -->
+                            <input type="submit" value="Buy" name="Done" class="btn btn-success btn-lg btn-block">
+                    </form>
+            </div>
+          </div>
+      
+        </div>
+      </div>
+
+      <div id="listModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+          
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h3 style="text-align:center;"  class="modal-title">Domain Selling Form</h3><br>
+
+                  <p style="color:rgb(7, 112, 7)">PS: Once any user requests your domain you will recieve an email, transfer domain withing 24 hours and payment will be done in maximum 2 hours of domain being transfered. Cheers!</p>
+                </div>
+                <div class="modal-body">
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                                <!-- <input type="text" class="form-control" name="seller" placeholder="Seller Name"><br> -->
+                                <input type="text" class="form-control" name="buyer" placeholder="Name"><br>
+                                <!-- <input type="text" class="form-control" name="domain" placeholder="Domain Name"><br> -->
+                                <input type="text" class="form-control" name="mobile-buyer" placeholder="Mobile Number"><br>
+                                <!-- <input type="text" class="form-control" name="mobile-seller" placeholder="Mobile Number of Seller"><br> -->
+                                <input type="text" class="form-control" name="payer-va" placeholder="Virtual Address(UPI)"><br>
+                                <!-- <input type="text" class="form-control" name="payee-va" placeholder="Seller Virtual Address"><br> -->
+                                <!-- <input type="text" class="form-control" name="payee-ac" placeholder="Account Number"><br> -->
+                                <!-- <input type="text" class="form-control" name="amount" placeholder="Amount"><br> -->
+                                <input type="submit" value="Sell" name="Done" class="btn btn-success btn-lg btn-block">
+                        </form>
+                </div>
+              </div>
+          
+            </div>
+          </div>
+
+
+<div class="container">
+
+        <div style="color:rgb(7, 112, 7);text-align: center;">
+                {% if msg %}
+                    {{msg}}
+                {% endif %}
+        </div><br>
+
+        <div style="text-align:right">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#listModal"><span class="glyphicon glyphicon-plus"></span>Add Listing</button>
+        </div><br>
+
+
+    <div class="well well-sm">
+        <strong>Display</strong>
+        <div class="btn-group">
+            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+                class="glyphicon glyphicon-th"></span>Grid</a>
+        </div>
+    </div>
+  
+    <div id="products" class="row list-group">
+        <div class="item  col-xs-4 col-lg-4">
+            <div class="thumbnail">
+                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                        Example1.com</h4>
+                    <p class="group inner list-group-item-text">
+                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                    ₹&nbsp;79000</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <a data-toggle="modal" data-target="#myModal" class="btn btn-success" ><span class="glyphicon glyphicon-plus"></span>Buy This</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item  col-xs-4 col-lg-4">
+            <div class="thumbnail">
+                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                            Example2.com</h4>
+                    <p class="group inner list-group-item-text">
+                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                    ₹&nbsp;30000</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <a class="btn btn-success" href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-plus"></span>Buy This</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item  col-xs-4 col-lg-4">
+            <div class="thumbnail">
+                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                            Example1.com</h4>
+                    <p class="group inner list-group-item-text">
+                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                    ₹&nbsp;3000</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <a class="btn btn-success" href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-plus"></span>Buy This</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item  col-xs-4 col-lg-4">
+            <div class="thumbnail">
+                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                            Example1.com</h4>
+                    <p class="group inner list-group-item-text">
+                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                    ₹&nbsp;40000</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <a class="btn btn-success" href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-plus"></span>Buy This</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item  col-xs-4 col-lg-4">
+            <div class="thumbnail">
+                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                            Example1.com</h4>
+                    <p class="group inner list-group-item-text">
+                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                    ₹&nbsp;1000</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <a class="btn btn-success" href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-plus"></span>Buy This</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item  col-xs-4 col-lg-4">
+            <div class="thumbnail">
+                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                            Example1.com</h4>
+                    <p class="group inner list-group-item-text">
+                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                    ₹&nbsp;9000</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <a class="btn btn-success" href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-plus"></span> Buy This</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    $(document).ready(function() {
+    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
+    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+});
+</script>
+
+{% endblock %}
