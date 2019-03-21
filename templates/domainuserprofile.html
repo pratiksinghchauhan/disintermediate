@@ -9,7 +9,7 @@
 
 {% block nav %}
 
-              <li><a href="/userhome/">{{request.user.username}}</a></li>
+              <li><a href="/profile/{{request.user.username}}">{{request.user.username}}</a></li>
               <li><a href="/accountsettings/"> <span class="glyphicon glyphicon-cog"></span></a></li>
               <li><a href="/logout/">Logout <span class="glyphicon glyphicon-log-out"></span></a></li>
 {% endblock %}

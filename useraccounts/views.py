@@ -277,3 +277,6 @@ def domainuserprofile(request):
     if request.method == "POST":
         return render(request,"domainuserprofile.html",{"msg":"Your request has been recorded, We will keep checking, your request will be considered in maximum 24 hours."})
     return render(request,"domainuserprofile.html")
+
+def domainDashboard(request):
+    return render(request,"domainDashboard.html")

@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import logout
 from login.views import home
-from useraccounts.views import domainuserprofile,messageadvverification,addmoney,viewdetailsmesswise,messagedietverification,messwise,userbills,profilesettings,emailsettings,userprofile,passwordsettings,loginajax,sellerrecords,paymentdone,userrecords,verifydiet,searchuser
+from useraccounts.views import domainDashboard,domainuserprofile,messageadvverification,addmoney,viewdetailsmesswise,messagedietverification,messwise,userbills,profilesettings,emailsettings,userprofile,passwordsettings,loginajax,sellerrecords,paymentdone,userrecords,verifydiet,searchuser
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^accountsettings/', profilesettings),
     url(r'^emailsettings/', emailsettings),
     # url(r'^userhome/', userprofile),
-    url(r'^userhome/', domainuserprofile),
+    
     url(r'^passwordsettings/', passwordsettings),
     url(r'^loginajax/', loginajax),
     url(r'^sellerrecords/', sellerrecords),
@@ -40,6 +40,9 @@ urlpatterns = [
     url(r'^messwiselist/', viewdetailsmesswise),
     url(r'^addmoney/', addmoney),
     url(r'^adverify/', messageadvverification),
+    ##domain views
+    url(r'^profile/', domainDashboard),
+    url(r'^userhome/', domainuserprofile),
     url(r'^', home),
 
 ]
